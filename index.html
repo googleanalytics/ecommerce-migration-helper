@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MJ7NLLG');</script>
+<!-- End Google Tag Manager -->
+
+<title>E-commerce Migration Helper</title>
+<style>
+  div {
+    margin: 8px
+  }
+
+  .hidden {
+    visibility:collapse;
+    height: 0px;
+    width: 0px;
+    overflow: hidden;
+    display: inline-block;
+  }
+</style>
+
+
+<h1>
+  Ecommerce Migration Helper
+</h1>
+<div>
+  Instructions:
+  <ol>
+    <li>Select whether you're using gtag.js or Google Tag Manager.</li>
+    <li>Enter the data for the event you want to send.</li>
+    <ul>
+      <li>Note: Must be in a JSON parsable format.</li>
+    </ul>
+    <li>(Optional) Set Google Analytics 4 and Universal Analytics property IDs to send data to, if you want to see results in a Google Analytics report.</li>
+    <li>Press the "Submit Test" button.</li>
+    <li>Wait for results to appear in the result boxes.
+      <ul>
+      </ul>
+  </ol>
+</div>
+<div>
+  API:
+  <select id="api">
+    <option value="dataLayer">GTM - dataLayer.push(...);</option>
+    <option value="gtag">gtag.js - gtag('event', ...);</option>
+  </select>
+</div>
+
+<div id="gtag">
+  Event Name: <textarea id="gtag-event" rows="1" cols="30">purchase</textarea>
+  <div>
+  Event Parameters:
+  </div>
+  <textarea id="gtag-params" rows="30" cols="80">{
+  "transaction_id": "123abc",
+  "value": 3.99,
+  "items": [
+    {
+      "item_id": "item_1",
+      "item_name": "Item 1",
+      "item_category": "Numbered Items",
+      "item_variant": "1",
+      "value": 1.99,
+      "quantity": 1
+    },
+    {
+      "item_id": "item_2",
+      "item_name": "Item 2",
+      "item_category": "Numbered Items",
+      "item_variant": "2",
+      "value": 2.00,
+      "quantity": 1
+    }
+  ]
+}</textarea>
+</div>
+<div id="dataLayer">
+  <div>
+    Data Layer Update:
+  </div>
+  <textarea id="dl-params" rows="30" cols="80">{
+  "event": "purchase",
+  "ecommerce": {
+    "purchase": {
+      "actionField": {
+        "id": "123abc",
+        "revenue": 3.99
+      },
+      "products": [
+        {
+          "id": "item_1",
+          "name": "Item 1",
+          "category": "Numbered Items",
+          "variant": "1",
+          "price": 1.99,
+          "quantity": 1
+        },
+        {
+          "id": "item_2",
+          "name": "Item 2",
+          "category": "Numbered Items",
+          "variant": "2",
+          "price": 2.00,
+          "quantity": 1
+        }
+      ]
+    }
+  }
+}</textarea>
+</div>
+
+<div>
+  Google Analytics 4 Measurement ID: <textarea id="ga4-property" rows="1" cols="30">G-EXAMPLE</textarea>
+</div>
+<div>
+  Universal Analytics Property ID: <textarea id="ua-property" rows="1" cols="30">UA-12345-6</textarea>
+</div>
+<button id="submit">
+  Submit Test
+</button>
+
+<div>
+  <div>
+    <h2>
+      What Am I Using?
+    </h2>
+    <span id="schema-not-submitted">Press submit to generate data.</span>
+    <div class="hidden" id="schema-known">
+      This appears to be the
+      <a class="hidden" href="https://developers.google.com/tag-manager/enhanced-ecommerce" id="schema-ua-gtm">Google Tag Manager Universal Analytics schema</a>
+      <a class="hidden" href="https://developers.google.com/tag-manager/ecommerce-ga4" id="schema-ga4-gtm">Google Tag Manager Google Analytics 4 schema</a>
+      <a class="hidden" href="https://developers.google.com/analytics/devguides/collection/gtagjs/ecommerce" id="schema-ua-gtag">gtag Universal Analytics schema</a>
+      <a class="hidden" href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce" id="schema-ga4-gtag">gtag Google Analytics 4 schema</a>
+      <span class="hidden" id="schema-gtag-unknown">
+        <a href="https://developers.google.com/analytics/devguides/collection/gtagjs/ecommerce">gtag Universal Analytics schema</a> or
+        <a href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce">gtag Google Analytics 4 schema</a>
+      </span>
+      .
+    </div>
+    <span class="hidden" id="schema-unknown">
+      The data you entered is not recognized as a Universal Analytics or a Google Analytics 4 event. Check <a href="TODO">here</a> for information on how to get the right data to input into this tool.
+    </span>
+  </div>
+  <div>
+    <h2>
+      Google Analytics 4 Tag Result
+    </h2>
+    <div>
+      This is the result of a Google Analytics 4 event tag w/ Ecommerce from data layer enabled.
+      <details>
+        <summary>Example Tag</summary>
+        <img src="./img/ga4_tag_config.png">
+      </details>
+    </div>
+    <textarea id="ga4-result" readonly cols="60">
+Press Submit to generate data.
+    </textarea>
+  </div>
+  <div>
+    <h2>
+      Universal Analytics Tag w/ Google Analytics 4 Support Result
+    </h2>
+    <div>
+      This is the result of a Universal Analytics tag with ecommerce from data layer and Google Analytics 4 schema support enabled.
+      <details>
+        <summary>Example Tag</summary>
+        <img src="./img/ua_with_ga4_config.png">
+      </details>
+    </div>
+    <textarea id="ua-ga4-result" readonly cols="60">
+Press Submit to generate data.
+    </textarea>
+  </div>
+  <div>
+    <h2>
+      Universal Analytics Tag w/ Legacy Result
+    </h2>
+    <div>
+      This is the result of a Universal Analytics tag with only ecommerce from data layer (no Google Analytics 4 schema support) enabled.
+      <details>
+        <summary>Example Tag</summary>
+        <img src="./img/ua_legacy_config.png">
+      </details>
+    </div>
+    <textarea id="ua-legacy-result" readonly cols="60">
+Press Submit to generate data.
+    </textarea>
+  </div>
+  <div>
+    <h2>
+      Schema Conversion
+    </h2>
+    <div>
+      To send this data using the gtag Google Analytics 4 schema, use the following command:
+    </div>
+    <textarea id="ga4-gtag-command" readonly cols="60">
+Press Submit to generate data.
+    </textarea>
+  </div>
+</div>
+
+<script src="./main.js" type="module"></script>
+
