@@ -46,6 +46,9 @@ const SchemaIdOptions = [
 const SHOW_CLASS = "";
 const HIDE_CLASS = "hidden";
 
+let lastParamString = '';
+let paramsPromise;
+
 /**
  * gtag declaration (since the snippet is GTM).
  */
@@ -61,24 +64,44 @@ function getApi() {
 }
 
 /**
- * @return {!Object<string, *>}
+ * @return {!Promise<!Object<string, *>>}
  */
 function getParams() {
   let paramsString = "";
-  try {
-    switch (getApi()) {
-      case schemaId.Api.GTAG:
-        paramsString = GtagParamsTextBox.value;
-        break;
-      case schemaId.Api.DATA_LAYER:
-        paramsString = DataLayerParamsTextBox.value;
-        break;
-    }
-    return JSON.parse(paramsString);
-  } catch (ex) {
-    alert(`Error parsing parameters: ${ex.message}`);
-    return {};
+
+  switch(getApi()) {
+    case schemaId.Api.GTAG:
+      paramsString = GtagParamsTextBox.value;
+      break;
+    case schemaId.Api.DATA_LAYER:
+      paramsString = DataLayerParamsTextBox.value;
+      break;
   }
+  if (paramsString !== lastParamString) {
+    lastParamString = paramsString;
+    paramsPromise = new Promise(function(resolve, reject) {
+      // Some effort to prevent weird inputs.
+      if (paramsString.indexOf('</script>') >= 0) {
+        reject('Invalid input.');
+      }
+      try {
+        window['resolveParams'] = resolve;
+        const scriptElem = document.createElement('script');
+        window.onerror = (message, source, line) => {
+          reject(`Error parsing parameters on line ${line}: ${message}`);
+          return false;
+        };
+        scriptElem.text = `window['resolveParams'](${paramsString});`;
+        const firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(scriptElem, firstScript);
+      } catch (ex) {
+        reject(`Error parsing parameters: ${ex.message}`);
+      }
+    });
+  }
+  // Re-evaluating the same parameters, so reuse the same promise.
+  // (It may already have been resolved).
+  return paramsPromise;
 }
 
 /**
@@ -104,12 +127,14 @@ function onApiChange(event) {
  * Updates the Schema ID portion of the UI with the current schema.
  */
 function updateSchemaId() {
-  const schema = schemaId.identifySchema(getApi(), getParams());
-  for (let i = 0; i < SchemaIdOptions.length; i++) {
-    SchemaIdOptions[i].className = HIDE_CLASS;
-  }
-  document.getElementById("schema-known").className = SHOW_CLASS;
-  document.getElementById(`schema-${schema}`).className = SHOW_CLASS;
+  getParams().then((params) => {
+    const schema = schemaId.identifySchema(getApi(), params);
+    for (let i = 0; i < SchemaIdOptions.length; i++) {
+      SchemaIdOptions[i].className = HIDE_CLASS;
+    }
+    document.getElementById("schema-known").className = SHOW_CLASS;
+    document.getElementById(`schema-${schema}`).className = SHOW_CLASS;
+  });
 }
 
 /**
@@ -128,21 +153,25 @@ function onSubmit(event) {
   // Clear the previous ecommerce object from the data layer if present.
   // Prevents a previous schema test from affecting the current one.
   dataLayer.push({ ecommerce: null });
-  switch (getApi()) {
-    case "gtag":
-      gtag("event", GtagEventTextbox.value, getParams());
-      break;
-    case "dataLayer":
-      const dlParams = getParams();
-      if (!dlParams["event"]) {
-        alert(
-          "Data layer update does not have an event name." +
-            " No tags will fire."
-        );
-      }
-      dataLayer.push(dlParams);
-      break;
-  }
+  getParams().then((params) => {
+    switch (getApi()) {
+      case "gtag":
+        gtag("event", GtagEventTextbox.value, getParams());
+        break;
+      case "dataLayer":
+        const dlParams = getParams();
+        if (!dlParams["event"]) {
+          alert(
+            "Data layer update does not have an event name." +
+              " No tags will fire."
+          );
+        }
+        dataLayer.push(dlParams);
+        break;
+    }
+  }).catch(message) => {
+    alert(message);
+  });
 }
 
 /**
