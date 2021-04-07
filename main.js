@@ -156,20 +156,19 @@ function onSubmit(event) {
   getParams().then((params) => {
     switch (getApi()) {
       case "gtag":
-        gtag("event", GtagEventTextbox.value, getParams());
+        gtag("event", GtagEventTextbox.value, params);
         break;
       case "dataLayer":
-        const dlParams = getParams();
-        if (!dlParams["event"]) {
+        if (!params["event"]) {
           alert(
             "Data layer update does not have an event name." +
               " No tags will fire."
           );
         }
-        dataLayer.push(dlParams);
+        dataLayer.push(params);
         break;
     }
-  }).catch(message) => {
+  }).catch((message) => {
     alert(message);
   });
 }
