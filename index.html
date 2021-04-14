@@ -181,7 +181,7 @@
   </ul>
 
   <p>Review the <a href="#help">Help</a> section to learn more about the <a
-      href="#help-purpose">Purpose</a> of the tool, <a href="help-usage">How
+      href="#help-purpose">Purpose</a> of the tool, <a href="#help-usage">How
       to use the tool</a>, or to send <a href="#feedback">Feedback</a>.
   </p>
 
@@ -343,7 +343,8 @@
           <ul>
             <li class="no-bullet">
               <details>
-                <summary>Show example GA4 event tag configuration</summary>
+                <summary>(Click to expand) Example GA4 event tag configuration
+                </summary>
                 <img src="./ga4_tag_config.png">
               </details>
             </li>
@@ -352,7 +353,7 @@
         <li>gtag.js configured with a GA4 property (not applicable when using
           the Data Layer).</li>
       </ul>
-      <p>The <a href="#analyzed-event">event</a> above would be interpreted as
+      <p>Your <a href="#analyzed-event">event</a> above would be interpreted as
         follows:</p>
       <textarea id="ga4-result" readonly
         cols="60">Click Analyze to generate data.</textarea>
@@ -367,7 +368,8 @@
           <ul>
             <li class="no-bullet">
               <details>
-                <summary>Show example UA tag configuration</summary>
+                <summary>(Click to expand) Example UA tag configuration
+                </summary>
                 <img src="./ua_with_ga4_config.png">
               </details>
             </li>
@@ -376,7 +378,7 @@
         <li>gtag.js configured with a UA property (not applicable when using
           the Data Layer).</li>
       </ul>
-      <p>The <a href="#analyzed-event">event</a> above would be interpreted as
+      <p>Your <a href="#analyzed-event">event</a> above would be interpreted as
         follows:</p>
       <textarea id="ua-ga4-result" readonly
         cols="60">Click Analyze to generate data.</textarea>
@@ -392,14 +394,15 @@
           <ul>
             <li class="no-bullet">
               <details>
-                <summary>Show example UA tag configuration</summary>
+                <summary>(Click to expand) Example UA tag configuration
+                </summary>
                 <img src="./ua_legacy_config.png">
               </details>
             </li>
           </ul>
         </li>
       </ul>
-      <p>The <a href="#analyzed-event">event</a> above would be interpreted as
+      <p>Your <a href="#analyzed-event">event</a> above would be interpreted as
         follows:</p>
       <textarea id="ua-legacy-result" readonly
         cols="60">Click Analyze to generate data.</textarea>
@@ -407,7 +410,7 @@
 
     <h3 id="ga4-recommendation">Recommended GA4 event</h3>
     <p>
-      To send the <a href="#analyzed-event">event</a> above as a GA4 event use
+      To send your <a href="#analyzed-event">event</a> above as a GA4 event use
       the following command:</p>
     <textarea id="ga4-gtag-command" readonly cols="60">Click Analyze to generate data.
     </textarea>
@@ -496,10 +499,11 @@
                   ecommerce activities and equivalent GA4 Event names</a> to
                 determine the correct event name. For example, a product click
                 event using a custom event name of <code>productClick</code>
-                would need to be updated from
-                <code>{'event': 'productClick', 'ecommerce': {...}}</code>
-              </li> to
-              <code>{'event': 'select_item', 'ecommerce': {...}}</code>
+                would need to be updated from:<br>
+                <code>{'event': 'productClick', 'ecommerce': {...}}</code><br>
+                to:<br>
+                <code>{'event': 'select_item', 'ecommerce': {...}}</code>
+              </li>
             </ul>
           </li>
         </ul>
