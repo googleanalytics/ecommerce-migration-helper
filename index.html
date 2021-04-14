@@ -1,62 +1,224 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MJ7NLLG');</script>
-<!-- End Google Tag Manager -->
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MJ7NLLG');</script>
+  <!-- End Google Tag Manager -->
 
-<title>E-commerce Migration Helper</title>
-<style>
-  div {
-    margin: 8px
-  }
+  <title>E-commerce migration helper</title>
+  <style>
+    body {
+      font: 400 16px/24px Roboto, Noto Sans, Noto Sans JP, Noto Sans KR, Noto Naskh Arabic, Noto Sans Thai, Noto Sans Hebrew, Noto Sans Bengali, sans-serif;
+      margin: 10px;
+    }
 
-  .hidden {
-    visibility:collapse;
-    height: 0px;
-    width: 0px;
-    overflow: hidden;
-    display: inline-block;
-  }
-</style>
+    section {
+      margin: 10px;
+    }
 
+    details {
+      margin: 15px 0;
+      cursor: pointer;
+    }
 
-<h1>
-  Ecommerce Migration Helper
-</h1>
-<div>
-  Instructions:
-  <ol>
-    <li>Select whether you're using gtag.js or Google Tag Manager.</li>
-    <li>Enter the data for the event you want to send.</li>
-    <ul>
-      <li>Note: Must be in a JSON parsable format.</li>
-    </ul>
-    <li>(Optional) Set Google Analytics 4 and Universal Analytics property IDs to send data to, if you want to see results in a Google Analytics report.</li>
-    <li>Press the "Submit Test" button.</li>
-    <li>Wait for results to appear in the result boxes.
-      <ul>
-      </ul>
-  </ol>
-</div>
-<div>
-  API:
-  <select id="api">
-    <option value="dataLayer">GTM - dataLayer.push(...);</option>
-    <option value="gtag">gtag.js - gtag('event', ...);</option>
-  </select>
-</div>
+    h2 {
+      margin: 50px 0px 30px;
+      color: #222;
+    }
 
-<div id="gtag">
-  Event Name: <textarea id="gtag-event" rows="1" cols="30">purchase</textarea>
-  <div>
-  Event Parameters:
-  </div>
-  <textarea id="gtag-params" rows="30" cols="80">{
+    h3,
+    h4 {
+      margin-top: 35px;
+    }
+
+    h4 {
+      margin-bottom: 8px;
+    }
+
+    hr {
+      margin: 50px 0;
+    }
+
+    #schema-not-submitted {
+      color: #999;
+    }
+
+    #schema-known {
+      color: darkgreen;
+    }
+
+    li.no-bullet {
+      list-style-type: none;
+    }
+
+    .hidden {
+      visibility: collapse;
+      height: 0px;
+      width: 0px;
+      overflow: hidden;
+      display: none;
+    }
+
+    label[for] {
+      cursor: pointer;
+    }
+
+    label {
+      color: #5f6368;
+      display: block;
+      font-size: 13px;
+    }
+
+    select.library {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      background-color: transparent;
+      border: 1px solid #e8eaed;
+      border-radius: 2px;
+      box-shadow: none;
+      color: #202124;
+      cursor: pointer;
+      display: inline-block;
+      font: 500 14px/36px Roboto, Noto Sans, Noto Sans JP, Noto Sans KR, Noto Naskh Arabic, Noto Sans Thai, Noto Sans Hebrew, Noto Sans Bengali, sans-serif;
+      height: 36px;
+      height: var(--devsite-select-height, 36px);
+      line-height: 34px;
+      line-height: var(--devsite-select-line-height, 34px);
+      max-width: 340px;
+      min-width: 72px;
+      outline: 0;
+      overflow: hidden;
+      padding: 0 27px 0 7px;
+      padding: var(--devsite-select-padding, 0 27px 0 7px);
+      text-align: left;
+      text-indent: .01px;
+      text-overflow: ellipsis;
+      -webkit-transition: background-color .2s;
+      transition: background-color .2s;
+      vertical-align: middle;
+      white-space: nowrap;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="4" viewBox="0 0 20 4"><path d="M0,0l4,4l4-4H0z" fill="%23212121"/></svg>') #fff no-repeat 100%;
+      margin: 10px 0;
+    }
+
+    button {
+      background: #fff;
+      background: var(--devsite-button-background, #fff);
+      border: 0;
+      border: var(--devsite-button-border, 0);
+      border-radius: 2px;
+      border-radius: var(--devsite-button-border-radius, 2px);
+      box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+      box-shadow: var(--devsite-button-box-shadow, 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15));
+      color: #1a73e8;
+      color: var(--devsite-button-color, #1a73e8);
+      font: 500 14px/36px Roboto, Noto Sans, Noto Sans JP, Noto Sans KR, Noto Naskh Arabic, Noto Sans Thai, Noto Sans Hebrew, Noto Sans Bengali, sans-serif;
+      font: var(--devsite-button-font, 500 14px/36px Roboto, Noto Sans, Noto Sans JP, Noto Sans KR, Noto Naskh Arabic, Noto Sans Thai, Noto Sans Hebrew, Noto Sans Bengali, sans-serif);
+      height: 36px;
+      height: var(--devsite-button-height, 36px);
+      letter-spacing: 0;
+      letter-spacing: var(--devsite-button-letter-spacing, 0);
+      line-height: 36px;
+      line-height: var(--devsite-button-line-height, 36px);
+      max-width: none;
+      max-width: var(--devsite-button-max-width, none);
+      padding: 0 16px;
+      padding: var(--devsite-button-padding, 0 16px);
+      text-transform: uppercase;
+      text-transform: var(--devsite-button-text-transform, uppercase);
+      width: auto;
+      width: var(--devsite-button-width, auto);
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      cursor: pointer;
+      display: inline-block;
+      margin: 0;
+      min-width: 36px;
+      outline: 0;
+      overflow: hidden;
+      text-align: center;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      -webkit-transition: background-color .2s, border .2s, box-shadow .2s;
+      transition: background-color .2s, border .2s, box-shadow .2s;
+      vertical-align: middle;
+      white-space: nowrap;
+      background: #1a73e8;
+      background: var(--devsite-button-primary-background, #1a73e8);
+      color: #fff;
+      color: var(--devsite-button-primary-color, #fff);
+      line-height: 36px;
+      line-height: var(--devsite-button-primary-line-height, 36px);
+      margin: 25px 0;
+      width: 125px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>
+    Ecommerce migration helper
+  </h1>
+
+  <p>The ecommerce migration helper can assist with the following: </p>
+  <ul>
+    <li><b>Identification</b> of the version and tagging solution you're
+      currently using to send ecommerce events.</li>
+    <li><b>Validation</b> of how the ecommerce events you've implemented are
+      interpreted by Google Analytics tags in Google Tag Manager.</li>
+    <li><b>Recommend</b> how to transition your existing implementation to
+      equivalent GA4 events.</li>
+  </ul>
+
+  <p>Review the <a href="#help">Help</a> section to learn more about the <a
+      href="#help-purpose">Purpose</a> of the tool, <a href="#help-usage">How
+      to use the tool</a>, or to send <a href="#feedback">Feedback</a>.
+  </p>
+
+  <h2 id="configure">Enter details about your current implementation</h2>
+
+  <section>
+
+    <p>To run an analysis, select which library your current implementation uses
+      and provide an ecommerce event snippet to analyze. For detailed
+      instructions see <a href="#help-usage">How to use the tool</a>.
+    </p>
+
+    <h3 id="select-library">1. Which library does your current ecommerce
+      implementation use?</h3>
+
+    <p><select id="api" class="library">
+        <option value="dataLayer">Tag Manager - dataLayer.push(...);</option>
+        <option value="gtag">gtag.js - gtag('event', ...);</option>
+      </select>
+    </p>
+
+    <h3 id="analyzed-event">2. Provide an ecommerce event to analyze.</h3>
+
+    <p>Replace the default example below with the ecommerce event data you want
+      to analyze and click <b>Analyze</b>. The event data should be copied from
+      your existing ecommerce implementation. For additional help see <a
+        href="#help-usage">How to use the tool</a>.</p>
+
+    <div id="gtag">
+      <p>
+        <label for="gtag-event">Event name</label>
+        <textarea id="gtag-event" rows="1" cols="30">purchase</textarea>
+      </p>
+      <p>
+        <label for="gtag-params">Event parameters</label>
+        <textarea id="gtag-params" rows="30" cols="80">
+{
   "transaction_id": "123abc",
   "value": 3.99,
   "items": [
@@ -77,13 +239,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "quantity": 1
     }
   ]
-}</textarea>
-</div>
-<div id="dataLayer">
-  <div>
-    Data Layer Update:
-  </div>
-  <textarea id="dl-params" rows="30" cols="80">{
+}
+</textarea>
+      </p>
+    </div>
+
+    <div id="dataLayer">
+      <p>
+        <label for="dl-params">Data Layer update</label>
+        <textarea id="dl-params" rows="30" cols="80">
+{
   "event": "purchase",
   "ecommerce": {
     "purchase": {
@@ -111,98 +276,298 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       ]
     }
   }
-}</textarea>
-</div>
+}
+      </textarea>
+      </p>
+    </div>
+    <!--
+    <div>
+      Google Analytics 4 Measurement ID:
+      <textarea id="ga4-property" rows="1" cols="30">G-EXAMPLE</textarea>
+    </div>
+    <div>
+      Universal Analytics Property ID:
+      <textarea id="ua-property" rows="1" cols="30">UA-12345-6</textarea>
+    </div>
+    -->
+    <button id="submit">Analyze</button>
+  </section>
 
-<div>
-  Google Analytics 4 Measurement ID: <textarea id="ga4-property" rows="1" cols="30">G-EXAMPLE</textarea>
-</div>
-<div>
-  Universal Analytics Property ID: <textarea id="ua-property" rows="1" cols="30">UA-12345-6</textarea>
-</div>
-<button id="submit">
-  Submit Test
-</button>
 
-<div>
-  <div>
-    <h2>
-      What Am I Using?
-    </h2>
-    <span id="schema-not-submitted">Press submit to generate data.</span>
-    <div class="hidden" id="schema-known">
-      This appears to be the
-      <a class="hidden" href="https://developers.google.com/tag-manager/enhanced-ecommerce" id="schema-ua-gtm">Google Tag Manager Universal Analytics schema</a>
-      <a class="hidden" href="https://developers.google.com/tag-manager/ecommerce-ga4" id="schema-ga4-gtm">Google Tag Manager Google Analytics 4 schema</a>
-      <a class="hidden" href="https://developers.google.com/analytics/devguides/collection/gtagjs/ecommerce" id="schema-ua-gtag">gtag Universal Analytics schema</a>
-      <a class="hidden" href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce" id="schema-ga4-gtag">gtag Google Analytics 4 schema</a>
-      <span class="hidden" id="schema-gtag-unknown">
-        <a href="https://developers.google.com/analytics/devguides/collection/gtagjs/ecommerce">gtag Universal Analytics schema</a> or
-        <a href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce">gtag Google Analytics 4 schema</a>
+  <h2 id="analysis">Results of analysis</h2>
+  <section>
+    <h3>Identification</h3>
+    <section>
+      <p>Identify the library and version of Google Analytics for the event
+        above.</p>
+      <div id="schema-not-submitted">Pending analysis...</div>
+      <div class="hidden" id="schema-known">
+        This appears to be a
+        <a class="hidden"
+          href="https://developers.google.com/tag-manager/enhanced-ecommerce"
+          id="schema-ua-gtm">Universal Analytics (Tag Manager) event</a>
+        <a class="hidden"
+          href="https://developers.google.com/tag-manager/ecommerce-ga4"
+          id="schema-ga4-gtm">Google Analytics 4 (Tag Manager) event</a>
+        <a class="hidden"
+          href="https://developers.google.com/analytics/devguides/collection/gtagjs/ecommerce"
+          id="schema-ua-gtag">Universal Analytics (gtag.js) event</a>
+        <a class="hidden"
+          href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce"
+          id="schema-ga4-gtag">Google Analytics 4 (gtag.js) event</a>
+        <span class="hidden" id="schema-gtag-unknown">
+          <a
+            href="https://developers.google.com/analytics/devguides/collection/gtagjs/ecommerce">Universal
+            Analytics (gtag.js) event</a> <b>OR</b> <a
+            href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce">Google
+            Analytics 4 (gtag.js) event</a>
+        </span>
+        .
+      </div>
+      <span class="hidden" id="schema-unknown">The data you entered is not
+        recognized as a Universal Analytics or a Google Analytics 4 event.
       </span>
-      .
-    </div>
-    <span class="hidden" id="schema-unknown">
-      The data you entered is not recognized as a Universal Analytics or a Google Analytics 4 event. Check <a href="TODO">here</a> for information on how to get the right data to input into this tool.
-    </span>
-  </div>
-  <div>
-    <h2>
-      Google Analytics 4 Tag Result
-    </h2>
-    <div>
-      This is the result of a Google Analytics 4 event tag w/ Ecommerce from data layer enabled.
-      <details>
-        <summary>Example Tag</summary>
-        <img src="./img/ga4_tag_config.png">
-      </details>
-    </div>
-    <textarea id="ga4-result" readonly cols="60">
-Press Submit to generate data.
-    </textarea>
-  </div>
-  <div>
-    <h2>
-      Universal Analytics Tag w/ Google Analytics 4 Support Result
-    </h2>
-    <div>
-      This is the result of a Universal Analytics tag with ecommerce from data layer and Google Analytics 4 schema support enabled.
-      <details>
-        <summary>Example Tag</summary>
-        <img src="./img/ua_with_ga4_config.png">
-      </details>
-    </div>
-    <textarea id="ua-ga4-result" readonly cols="60">
-Press Submit to generate data.
-    </textarea>
-  </div>
-  <div>
-    <h2>
-      Universal Analytics Tag w/ Legacy Result
-    </h2>
-    <div>
-      This is the result of a Universal Analytics tag with only ecommerce from data layer (no Google Analytics 4 schema support) enabled.
-      <details>
-        <summary>Example Tag</summary>
-        <img src="./img/ua_legacy_config.png">
-      </details>
-    </div>
-    <textarea id="ua-legacy-result" readonly cols="60">
-Press Submit to generate data.
-    </textarea>
-  </div>
-  <div>
-    <h2>
-      Schema Conversion
-    </h2>
-    <div>
-      To send this data using the gtag Google Analytics 4 schema, use the following command:
-    </div>
-    <textarea id="ga4-gtag-command" readonly cols="60">
-Press Submit to generate data.
-    </textarea>
-  </div>
-</div>
+    </section>
 
-<script src="./main.js" type="module"></script>
+    <h3>Validation</h3>
+    <section>
+      <p>Use the following information to confirm how the event above is
+        interpreted by various libraries and tag configurations.</p>
 
+      <h4 id="validation-ga4">Google Analytics 4</h4>
+      <p>
+        For the following configurations:</p>
+      <ul>
+        <li>Tag Manager <b>Google Analytics 4 event tag</b> with <b>Send
+            Ecommerce from Data Layer</b> enabled.
+          <ul>
+            <li class="no-bullet">
+              <details>
+                <summary>(Click to expand) Example GA4 event tag configuration
+                </summary>
+                <img src="./ga4_tag_config.png">
+              </details>
+            </li>
+          </ul>
+        </li>
+        <li>gtag.js configured with a GA4 property (not applicable when using
+          the Data Layer).</li>
+      </ul>
+      <p>Your <a href="#analyzed-event">event</a> above would be interpreted as
+        follows:</p>
+      <textarea id="ga4-result" readonly
+        cols="60">Click Analyze to generate data.</textarea>
+
+      <h4 id="validation-ua-ga4">Universal Analytics (GA4 support enabled)</h4>
+      <p>
+        For the following configurations:</p>
+      <ul>
+        <li>Tag Manager <b>Universal Analytics tag</b> with <b>Send Ecommerce
+            from Data Layer</b> and <b>Use GA4 events and parameters</b>
+          enabled.
+          <ul>
+            <li class="no-bullet">
+              <details>
+                <summary>(Click to expand) Example UA tag configuration
+                </summary>
+                <img src="./ua_with_ga4_config.png">
+              </details>
+            </li>
+          </ul>
+        </li>
+        <li>gtag.js configured with a UA property (not applicable when using
+          the Data Layer).</li>
+      </ul>
+      <p>Your <a href="#analyzed-event">event</a> above would be interpreted as
+        follows:</p>
+      <textarea id="ua-ga4-result" readonly
+        cols="60">Click Analyze to generate data.</textarea>
+
+
+      <h4 id="validation-ua-legacy">Universal Analytics</h4>
+      <p>
+        For the following configuration:</p>
+      <ul>
+        <li>Tag Manager <b>Universal Analytics tag</b> with <b>Send Ecommerce
+            from Data Layer</b> enabled (i.e. does not use GA4 events and
+          parameters).
+          <ul>
+            <li class="no-bullet">
+              <details>
+                <summary>(Click to expand) Example UA tag configuration
+                </summary>
+                <img src="./ua_legacy_config.png">
+              </details>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p>Your <a href="#analyzed-event">event</a> above would be interpreted as
+        follows:</p>
+      <textarea id="ua-legacy-result" readonly
+        cols="60">Click Analyze to generate data.</textarea>
+    </section>
+
+    <h3 id="ga4-recommendation">Recommended GA4 event</h3>
+    <p>
+      To send your <a href="#analyzed-event">event</a> above as a GA4 event use
+      the following command:</p>
+    <textarea id="ga4-gtag-command" readonly cols="60">Click Analyze to generate data.
+    </textarea>
+
+  </section>
+
+  <hr>
+
+  <h2 id="help">Help</h2>
+  <section>
+    <h3 id="help-purpose">Purpose of the tool</h3>
+    <p>To simplify the transition from Universal Analytics to Google Analytics
+      4, ecommerce events and parameters for UA and GA4 are compatible in most,
+      but not all, cases. Review the guides available on the <a
+        href="https://developers.google.com/analytics/devguides/collection/upgrade/ga4">GA4
+        upgrade center</a> for details on compatibility and the pros/cons of
+      various upgrade options.</p>
+    <p>The ecommerce migration helper can be used to clarify the compatibility
+      of an event with various library/API and tag configurations. It helps with
+      the following:</p>
+    <ol>
+      <li>Identify which version and API/library is used to send the ecommerce
+        event to Google Analytics.
+        <ul>
+          <li>It will attempt to identify whether the event is Universal
+            Analytics, or Google Analytics 4 and which tagging solution was
+            used.</li>
+          <li><b>Why?</b>: Identify your current implementation, if you're not
+            sure.</li>
+        </ul>
+      </li>
+      <li>Validate how your implementation is interpreted by Google Analytics
+        tags in Google Tag Manager.
+        <ul>
+          <li>How the event is interpreted by various tag configurations. For
+            example, if the event you provide is a UA purchase event sent using
+            the Data Layer the tool can show how that event and associated
+            parameters map to the equivalent GA4 event.</li>
+          <li><b>Why?</b> (1) confirm your ecommerce events are well-formed and
+            (2) understand how data maps to equivalent parameters (or doesn't)
+            when sending GA4 events to a UA property or sending UA events to GA4
+            property.</li>
+        </ul>
+      <li>Recommend how to transition the event to an equivalent GA4 event.
+        <ul>
+          <li><b>Why?</b> To assist with transitioning the your implementation
+            to the recommended GA4 format.</li>
+        </ul>
+      </li>
+
+    </ol>
+
+
+    <h3 id="help-usage">How to use the tool</h3>
+
+    <h4>Enter details about your current implementation</h4>
+
+    <p><a href="#configure">Configure</a> the tool by selecting which
+      library/API you're using to send ecommerce data and provide the details of
+      the ecommerce event you want to analyze. <b>Note:</b> The tool is
+      preconfigured with a default example for both the <i>dataLayer.push
+        API</i> and <i>gtag API</i> cases.</p>
+    <ul>
+      <li><b>Tag Manager - dataLayer.push(...);</b>
+        <ul>
+          <li>The default example is a GA4 purchase ecommerce event sent to
+            Google Analytics using the <a
+              href="https://developers.google.com/tag-manager/reference#datalayer.push">Data
+              Layer update</a> method. For comparison, see a similar <a
+              href="https://developers.google.com/tag-manager/ecommerce-ga4#measure_purchases">GA4
+              purchase example snippet</a>.
+          </li>
+          <li>In the <b>Data Layer update</b> input field, provide the ecommerce
+            event object to analyze. Only include the key/value
+            pairs and not the <code>dataLayer.push</code> method call. All
+            objects must include an <code>event</code> key. If your
+            implementation does not have an <code>event</code> key because the
+            event is triggered automatically (e.g. DOM load) then you'll need to
+            add an <code>event</code> key to use the tool.
+            <ul>
+              <li>The <a href="#ga4-recommendation">GA4 recommendation</a>
+                result will not work if you use custom event names. Instead use
+                the recommended GA4 event name for the corresponding ecommerce
+                action. See <a
+                  href="https://developers.google.com/analytics/devguides/collection/upgrade/ga4/gtm-ga4-to-ua#ua-ga4-events">UA
+                  ecommerce activities and equivalent GA4 Event names</a> to
+                determine the correct event name. For example, a product click
+                event using a custom event name of <code>productClick</code>
+                would need to be updated from:<br>
+                <code>{'event': 'productClick', 'ecommerce': {...}}</code><br>
+                to:<br>
+                <code>{'event': 'select_item', 'ecommerce': {...}}</code>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><b>gtag.js - gtag('event', ...);</b>
+        <ul>
+          <li>The default example is a GA4 purchase ecommerce event sent to
+            Google Analytics using the <a
+              href="https://developers.google.com/gtagjs/reference/api#event">gtag.js
+              API</a>. For comparison, see a similar <a
+              href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce#purchase">GA4
+              purchase example snippet</a>.
+          </li>
+          <li>Event name and parameters are entered separately in the <b>Event
+              name</b> and <b>Event
+              parameters</b> input fields, respectively. For ecommerce
+            parameters, only provide the ecommerce object and not the
+            <code>gtag()</code> function call.
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <h4 id="help-results">Results of analysis</h4>
+    <p>The <b>Identification</b> section attempts to identify the library/API
+      used to send the ecommerce data and the Google Analytics version for
+      which the data is formatted.</p>
+    <p>The <b>Validation</b> section shows how the event is interpreted for
+      various Google Analytics configurations.</p>
+    <p>The <b>Recommended GA4 event</b> section attempts to generate the
+      corresponding GA4 event for the provided event.</p>
+
+    <h5>Example</h5>
+    <p>Analyze the default gtag.js example, a purchase event using
+      the <i>gtag API</i>, the results are as follows:</p>
+    <ul>
+      <li><b>Identification</b>: The example uses the <b>gtag API</b> and the
+        GA4 ecommerce data format.</li>
+      <li><b>Validation</b>:
+        <ul>
+          <li><a href="#validation-ga4">Google Analytics 4</a> and <a
+              href="#validation-ua-ga4">Universal Analytics (GA4 support
+              enabled)</a> configurations both read the ecommerce data as shown
+            in the analysis results. The <a
+              href="#validation-ua-legacy">Universal Analytics</a> tag without
+            GA4 support enabled will not read the ecommerce data sent and the
+            <code>No ecommerce data found</code> message is shown.
+          </li>
+        </ul>
+      </li>
+      <li><b>Recommendation</b>: The command to send the event using the gtag
+        API is shown. Since the default event uses the gtag API to send a GA4
+        event, there is no difference.
+      </li>
+    </ul>
+
+  </section>
+  <h2 id="feedback">Feedback / Report an issue</h2>
+  <section>
+    <p>To view open issues, send feedback or report an issue, see <a
+        href="https://github.com/googleanalytics/ecommerce-migration-helper/issues">ecommerce-migration-helper</a>.
+    </p>
+  </section>
+  <script src="./main.js" type="module"></script>
+</body>
+
+</html>
