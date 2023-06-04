@@ -44,7 +44,7 @@ const GA4_PRODUCT_FIELDS = {
   id: "item_id",
   nm: "item_name",
   br: "item_brand",
-  ca: "item_cateogry",
+  ca: "item_category",
   c2: "item_category2",
   c3: "item_category3",
   c4: "item_category4",
